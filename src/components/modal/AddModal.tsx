@@ -9,26 +9,15 @@ import {
 } from "@heroui/react";
 import { Input } from "@heroui/react";
 import { useState ,ChangeEvent, FormEvent } from "react";
-
-interface FormData {
-  restaurantName: string;
-  address: string;
-  contactNo: string;
-  image: File | null;
-}
-
-interface ValidationErrors {
-  restaurantName: string;
-  address: string;
-  contactNo: string;
-  image: string;
-}
+import { FormDetails,ValidationErrors } from "../../interface/datatypes";
+import { uploadData } from "../../api/project";
+import toast from "react-hot-toast";
 
 
 const AddModal = () => {
   
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [formData,setFormData] = useState<FormData>({
+  const [formData,setFormData] = useState<FormDetails>({
     restaurantName: '',
     address: '',
     contactNo: '',
@@ -126,17 +115,34 @@ const AddModal = () => {
         if (cloudinaryData.secure_url) {
           const imageUrl = cloudinaryData.secure_url; 
 
-          const backendData = new FormData();
-          backendData.append("restaurantName", formData.restaurantName);
-          backendData.append("address", formData.address);
-          backendData.append("contactNo", formData.contactNo);
-          backendData.append("image", imageUrl);  
-
-          console.log('backend',backendData);
-            
-
-          
- 
+          const backendData = {
+            restaurantName: formData.restaurantName,
+            address: formData.address,
+            contactNo: formData.contactNo,
+            image: imageUrl as string, // Pass the URL directly
+          };
+        
+          if(backendData){
+            const response = await uploadData(backendData)
+            if(response){
+               toast.success("data added sucesfully")
+               setFormData({
+                restaurantName: '',
+                address: '',
+                contactNo: '',
+                image: null,
+              });
+              setErrors({
+                restaurantName: '',
+                address: '',
+                contactNo: '',
+                image: '',
+              });
+  
+              // Close the modal
+              onOpenChange();
+            }
+          }
         } else {
           throw new Error('Image upload failed');
         }

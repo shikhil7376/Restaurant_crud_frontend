@@ -1,47 +1,44 @@
-import { Image } from "@heroui/react";
+import AddModal from "../components/modal/AddModal";
 
 const Home = () => {
     return (
         <div className="">
+          
             <div className=" absolute right-0 p-3">
-                <button
-                    className="w-12 h-12 flex items-center justify-center bg-gradient-to-br from-gray-800 via-gray-600 to-gray-400 text-white text-2xl font-bold rounded-full shadow-lg hover:scale-110 hover:opacity-90 transition-transform duration-300 ease-in-outhover:ring-4 hover:ring-gray-500 animate-pulse"                    title="Add"
-                >
-                    +
-                </button>
+            <AddModal/>
             </div>
+          
             <div className="absolute bottom-11 left-5 flex justify-center gap-3 p-3 w-[70%] overflow-x-scroll scrollbar-hide">
-                <Image
-                    isZoomed
+                <img
                     alt="HeroUI Fruit Image with Zoom"
                     src="https://cdn.pixabay.com/photo/2020/08/27/07/31/restaurant-5521372_640.jpg"
                     width={200}
-                    height={200}
                     className="rounded-lg"
+                    style={{objectFit:'cover',height:'250px'}}
                 />
-                <Image
-                    isZoomed
+                <img
+                    
                     alt="HeroUI Fruit Image with Zoom"
                     src="https://i.pinimg.com/originals/c2/c6/4b/c2c64b930af48a341c3adef7c659d36e.png"
                     width={200}
-                    height={200}
                     className="rounded-lg"
+                    style={{objectFit:'cover',height:'250px'}}
+                    
                 />
-                <Image
-                    isZoomed
+                <img
+                    
+                    alt="HeroUI Fruit Image with Zoom"
+                    src="https://watermark.lovepik.com/photo/20211208/large/lovepik-hotel-restaurant-environment-picture_501623026.jpg"
+                    width={200}
+                    className="rounded-lg"
+                    style={{objectFit:'cover',height:'250px'}}
+                />
+                <img
                     alt="HeroUI Fruit Image with Zoom"
                     src="https://i.pinimg.com/originals/c2/c6/4b/c2c64b930af48a341c3adef7c659d36e.png"
                     width={200}
-                    height={200}
                     className="rounded-lg"
-                />
-                <Image
-                    isZoomed
-                    alt="HeroUI Fruit Image with Zoom"
-                    src="https://i.pinimg.com/originals/c2/c6/4b/c2c64b930af48a341c3adef7c659d36e.png"
-                    width={200}
-                    height={200}
-                    className="rounded-lg"
+                    style={{objectFit:'cover',height:'250px'}}
                 />
             </div>
             <div className=" p-1 absolute bottom-0 left-10 pagination-controls flex gap-4 ">

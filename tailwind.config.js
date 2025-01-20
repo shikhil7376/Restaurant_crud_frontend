@@ -4,7 +4,7 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/@heroui/theme/dist/components/navbar.js"
+    "./node_modules/@heroui/theme/dist/components/(input|modal|navbar|form).js"
   ],
   theme: {
     extend: {},

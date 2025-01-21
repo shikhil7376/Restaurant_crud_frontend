@@ -22,6 +22,8 @@ const Home = () => {
 
       try {
        const response = await getData(page,4)  
+       console.log('response',response);
+       
        if (response && response.data) {
         setData(response.data);
         setPagination({
@@ -41,6 +43,8 @@ const Home = () => {
 
   
   const handlePageChange = (newPage: number) => {
+    console.log('herer');
+    
     if (newPage >= 1 && newPage <= pagination.totalPages) {
         setPagination((prev) => ({ ...prev, currentPage: newPage }));
     }

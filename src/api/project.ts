@@ -24,3 +24,13 @@ export const getData = async(page: number = 1, limit: number = 4)=>{
         return errorHandle(err); // Handle error if any
     }
 }
+
+export const deleteData = async( id:string)=>{
+    try {        
+       const response = await api.delete(`/project/deleteData/${id}`) 
+       return response
+    } catch (error) {
+        const err: Error = error as Error;
+        return errorHandle(err); 
+    }
+}

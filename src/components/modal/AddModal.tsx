@@ -9,12 +9,18 @@ import {
 } from "@heroui/react";
 import { Input } from "@heroui/react";
 import { useState ,ChangeEvent, FormEvent } from "react";
-import { FormDetails,ValidationErrors } from "../../interface/datatypes";
+import { FormDetails,getDetails,ValidationErrors } from "../../interface/datatypes";
 import { uploadData } from "../../api/project";
 import toast from "react-hot-toast";
 
 
-const AddModal = () => {
+interface AddModalProps{
+  setData:React.Dispatch<React.SetStateAction<getDetails[]>>
+  fetchUserData: (page: number) => void;
+  pagination: { currentPage: number; totalPages: number; totalCount: number };
+}
+
+const AddModal: React.FC<AddModalProps> = ({ setData ,fetchUserData, pagination  }) => {
   
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [formData,setFormData] = useState<FormDetails>({
@@ -77,7 +83,6 @@ const AddModal = () => {
   }
 
   const handleImageChange = (e:ChangeEvent<HTMLInputElement>)=>{
-    console.log('hereee');
     
      const file = e.target.files ? e.target.files[0]:null
      setFormData(prevState => ({
@@ -109,9 +114,7 @@ const AddModal = () => {
           }
         );
         const cloudinaryData = await cloudinaryResponse.json();
-        console.log('cdata',cloudinaryData);
         
-
         if (cloudinaryData.secure_url) {
           const imageUrl = cloudinaryData.secure_url; 
 
@@ -126,6 +129,10 @@ const AddModal = () => {
             const response = await uploadData(backendData)
             if(response){
                toast.success("data added sucesfully")
+
+               setData((prevData)=>[response.data,...prevData])
+               fetchUserData(pagination.currentPage);
+
                setFormData({
                 restaurantName: '',
                 address: '',

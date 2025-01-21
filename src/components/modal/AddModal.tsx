@@ -13,7 +13,6 @@ import { FormDetails,getDetails,ValidationErrors } from "../../interface/datatyp
 import { uploadData } from "../../api/project";
 import toast from "react-hot-toast";
 
-
 interface AddModalProps{
   setData:React.Dispatch<React.SetStateAction<getDetails[]>>
   fetchUserData: (page: number) => void;
@@ -29,7 +28,8 @@ const AddModal: React.FC<AddModalProps> = ({ setData ,fetchUserData, pagination 
     contactNo: '',
     image: null,
   })
-
+  
+  const [loading,setLoading] = useState(false)
   const [errors, setErrors] = useState<ValidationErrors>({
     restaurantName: '',
     address: '',
@@ -106,6 +106,7 @@ const AddModal: React.FC<AddModalProps> = ({ setData ,fetchUserData, pagination 
       formDataToUpload.append("upload_preset", "stock_pics");
 
       try {
+        setLoading(true)
         const cloudinaryResponse = await fetch(
           'https://api.cloudinary.com/v1_1/dororvabe/image/upload',
           {
@@ -129,7 +130,7 @@ const AddModal: React.FC<AddModalProps> = ({ setData ,fetchUserData, pagination 
             const response = await uploadData(backendData)
             if(response){
                toast.success("data added sucesfully")
-
+               setLoading(false)
                setData((prevData)=>[response.data,...prevData])
                fetchUserData(pagination.currentPage);
 
@@ -155,6 +156,8 @@ const AddModal: React.FC<AddModalProps> = ({ setData ,fetchUserData, pagination 
         }
       } catch (error) {
         console.error("Error uploading image:", error);
+      }finally{
+        setLoading(false)
       }
     }
   };
@@ -186,15 +189,15 @@ const AddModal: React.FC<AddModalProps> = ({ setData ,fetchUserData, pagination 
                     <p className="text-red-500 text-sm">{errors.contactNo}</p>
                   )}
                   <div>
-                    <label htmlFor="image-upload" className="block text-gray-700 text-sm ">
-                      Upload Image
+                    <label htmlFor="image-upload" className="block text-gray-700  ">
+                     <p className="text-xs font-semibold text-gray-500">Upload Image</p> 
                     </label>
                     <input
                       id="image-upload"
                       type="file"
                       accept="image/*"
                       onChange={handleImageChange}
-                      className="mt-2 p-2 bg-gray-200 rounded-md w-full"
+                      className="mt-2 p-2 bg-gray-200 rounded-md w-full text-sm text-gray-500 "
                     />
                      {errors.image && <p className="text-red-500 text-sm mt-1">{errors.image}</p>}
                   </div>
@@ -209,8 +212,8 @@ const AddModal: React.FC<AddModalProps> = ({ setData ,fetchUserData, pagination 
                 <Button color="danger" variant="light" onPress={onClose}>
                   Close
                 </Button>
-                <button color="primary"  onClick={handleSubmit} className="bg-black text-white p-1 rounded-lg font-semibold">
-                  submit
+                <button color="primary"  onClick={handleSubmit} className="bg-black text-white px-3 rounded-lg font-semibold">
+                {loading ? 'Saving...' : 'Save'}
                 </button>
               </ModalFooter>
             </>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import AddModal from "../components/modal/AddModal";
 import { getDetails } from "../interface/datatypes";
-import { getData } from "../api/project";
+import { getData, updateData } from "../api/project";
 import errorHandle from "../api/error";
 import DetailModal from "../components/modal/DetailModal";
 import { deleteData } from "../api/project";
@@ -77,6 +77,21 @@ const Home = () => {
     }
    }
 
+
+   const handleUpdate = async (updatedItem:getDetails)=>{
+       try {
+          const response = await updateData(updatedItem)
+          if (response?.data.success) {
+            setData((prevItems) =>
+                prevItems.map((item) => (item.id === updatedItem.id ? updatedItem : item))
+            );
+        }
+       } catch (error) {
+        console.error("Unexpected error:", error); // Log non-standard errors
+        errorHandle(new Error("An unexpected error occurred."));
+       }
+   }
+
     return (
         <div className="">
 
@@ -105,6 +120,7 @@ const Home = () => {
                         onOpenChange={setIsModalOpen}
                         item={selectedItem}
                         onDelete={handleDelete}
+                        onUpdate={handleUpdate}
                     />
                 )}
 

@@ -1,6 +1,6 @@
 import api from "../services/axios";
 import errorHandle from "./error";
-import { ValidationErrors } from "../interface/datatypes";
+import { getDetails, ValidationErrors } from "../interface/datatypes";
 
 
 export const uploadData = async(data:ValidationErrors)=>{
@@ -32,5 +32,15 @@ export const deleteData = async( id:string)=>{
     } catch (error) {
         const err: Error = error as Error;
         return errorHandle(err); 
+    }
+}
+
+export const updateData = async(updatedFields:getDetails)=>{
+    try {
+       const response = await api.put(`/project/update`,updatedFields)
+       return response
+    } catch (error) {
+       const err: Error = error as Error;
+       return errorHandle(err); 
     }
 }

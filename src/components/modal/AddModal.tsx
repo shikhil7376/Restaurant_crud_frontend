@@ -190,7 +190,7 @@ const AddModal: React.FC<AddModalProps> = ({ setData ,fetchUserData, pagination 
                   )}
                   <div>
                     <label htmlFor="image-upload" className="block text-gray-700  ">
-                     <p className="text-xs font-semibold text-gray-500">Upload Image</p> 
+                     <p className="text-xs  text-gray-500">Upload Image</p> 
                     </label>
                     <input
                       id="image-upload"
@@ -212,7 +212,7 @@ const AddModal: React.FC<AddModalProps> = ({ setData ,fetchUserData, pagination 
                 <Button color="danger" variant="light" onPress={onClose}>
                   Close
                 </Button>
-                <button color="primary"  onClick={handleSubmit} className="bg-black text-white px-3 rounded-lg font-semibold">
+                <button color="primary"  onClick={handleSubmit} className="bg-black text-white px-3 rounded-lg text-md">
                 {loading ? 'Saving...' : 'Save'}
                 </button>
               </ModalFooter>
